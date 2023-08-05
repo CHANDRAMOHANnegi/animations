@@ -24,6 +24,7 @@ const fixTwo = (num) => {
 
 export const Card = ({ title, text, translateY, index }) => {
   const rStyle = useAnimatedStyle(() => {
+    const active_index = parseInt(translateY.value / CARD_HEIGHT);
     const absY = fixTwo(translateY.value % CARD_HEIGHT);
 
     const width = interpolate(
@@ -54,7 +55,7 @@ export const Card = ({ title, text, translateY, index }) => {
       Extrapolate.CLAMP
     );
 
-    const translatey = interpolate(
+    let translatey = interpolate(
       translateY.value,
       [
         -1,
@@ -73,25 +74,20 @@ export const Card = ({ title, text, translateY, index }) => {
       Extrapolate.CLAMP
     );
 
-    const diff =interpolate(
-      absY,
-      [
-        0,
-        CARD_HEIGHT * index,
-        CARD_HEIGHT * (index + 1 / 2),
-        CARD_HEIGHT * (index + 1),
-      ],
-      [
-        0,
-        translateY.value,
-        translateY.value,
-        translateY.value - 60 * index,
-      ],
-      Extrapolate.CLAMP
-    );
+    const diff = interpolate(absY, [0, 60, 120], [0, 0, 60], Extrapolate.CLAMP);
+    if (index > active_index) {
+      if (active_index > 0) {
+        translatey -= diff;
+      }
+    }
 
     if (index < 3) {
-      console.log(`idx:${index}=> Y: ${fixTwo(translateY.value)}, y: ${fixTwo(translatey)}, absY: ${absY}, height: ${fixTwo(height)}, active_height: ${fixTwo(active_height)}  `);
+      console.log(index, active_index);
+      console.log(
+        `idx:${index}=> Y: ${fixTwo(translateY.value)}, y: ${fixTwo(
+          translatey
+        )}, absY: ${absY}, height: ${fixTwo(height)}, diff: ${fixTwo(diff)}  `
+      );
       // console.log({absY});
       // console.log("-->", index, {
       //   Y: fixTwo(translateY.value),
@@ -99,16 +95,11 @@ export const Card = ({ title, text, translateY, index }) => {
       //   height: fixTwo(height),
       //   absY,
       //   active_height: fixTwo(active_height),
-      //   // translateX: fixTwo(translatex),
-      //   // width: fixTwo(width),
       // });
     }
 
     return {
-      transform: [
-        { translateY: translatey },
-        { translateX: translatex },
-      ],
+      transform: [{ translateY: translatey }, { translateX: translatex }],
       height,
       width,
     };
