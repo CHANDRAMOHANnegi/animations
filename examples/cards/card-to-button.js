@@ -77,16 +77,24 @@ export const Card = ({ title, text, translateY, index }) => {
     const diff = interpolate(absY, [0, 60, 120], [0, 0, 60], Extrapolate.CLAMP);
     if (index > active_index) {
       if (active_index > 0) {
-        translatey -= diff;
+        translatey -= diff ;
+      }
+    } else if (index === active_index) {
+      if (index == 1) {
+      } else if (index == 2) {
+        // translatey -= 60;
+      } else {
+        // translatey -= 60 * index;
       }
     }
 
-    if (index < 3) {
-      console.log(index, active_index);
+    if (index < 5) {
       console.log(
-        `idx:${index}=> Y: ${fixTwo(translateY.value)}, y: ${fixTwo(
-          translatey
-        )}, absY: ${absY}, height: ${fixTwo(height)}, diff: ${fixTwo(diff)}  `
+        `idx:${index},${active_index}=> Y: ${fixTwo(
+          translateY.value
+        )}, y: ${fixTwo(translatey)}, absY: ${absY}, height: ${fixTwo(
+          height
+        )}, diff: ${fixTwo(diff)}  `
       );
       // console.log({absY});
       // console.log("-->", index, {
