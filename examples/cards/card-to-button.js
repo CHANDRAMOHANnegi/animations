@@ -61,10 +61,10 @@ export const Card = ({ title, text, translateY, index }) => {
     if (index > active_index) {
       if (active_index > 0) {
         if (diff) {
-          translatey -= diff; //+ 60 * (index-1);
+          translatey -= 60 * (active_index - 1) + diff;
         } else {
-          if (translateY.value > index * CARD_HEIGHT) {
-            translatey -= 60; //+ 60 * (index-1);
+          if (absY < 60) {
+            translatey -= 60 * (active_index - 1); //+ 60 * (index-1);
           } else {
             // translatey -= 60; //+ 60 * (index-1);
           }
@@ -77,7 +77,7 @@ export const Card = ({ title, text, translateY, index }) => {
       if (index > 0) {
         if (translateY.value > index * CARD_HEIGHT + FINAL_HEIGHT) {
           if (diff) {
-            translatey -= 60 * (index - 1) +diff; //+ 60 * (index-1);
+            translatey -= 60 * (index - 1) + diff; //+ 60 * (index-1);
           } else {
             translatey -= 60 * index; //+ 60 * (index-1);
           }
