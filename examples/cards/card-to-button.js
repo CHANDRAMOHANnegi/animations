@@ -16,6 +16,7 @@ const SPACING = 5;
 const BUTTON_WIDTH = 60;
 const BUTTON_SPACING = 20;
 const VERTICAL_SPACING = 5;
+const FINAL_HEIGHT = CARD_HEIGHT / 2;
 
 const fixTwo = (num) => {
   "worklet";
@@ -55,40 +56,74 @@ export const Card = ({ title, text, translateY, index }) => {
       Extrapolate.CLAMP
     );
 
-    let translatey = interpolate(
-      translateY.value,
-      [
-        -1,
-        0,
-        CARD_HEIGHT * index,
-        CARD_HEIGHT * (index + 1 / 2),
-        CARD_HEIGHT * (index + 1),
-      ],
-      [
-        translateY.value,
-        translateY.value,
-        translateY.value,
-        translateY.value,
-        translateY.value - 60 * index,
-      ],
-      Extrapolate.CLAMP
-    );
-
-    const diff = interpolate(absY, [0, 60, 120], [0, 0, 60], Extrapolate.CLAMP);
+    let diff = interpolate(absY, [0, 60, 120], [0, 0, 60], Extrapolate.CLAMP);
+    let translatey = translateY.value;
     if (index > active_index) {
       if (active_index > 0) {
-        translatey -= diff ;
+        if (diff) {
+          translatey -= diff; //+ 60 * (index-1);
+        } else {
+          if (translateY.value > index * CARD_HEIGHT) {
+            translatey -= 60; //+ 60 * (index-1);
+          } else {
+            // translatey -= 60; //+ 60 * (index-1);
+          }
+        }
       }
-    } else if (index === active_index) {
-      if (index == 1) {
-      } else if (index == 2) {
-        // translatey -= 60;
-      } else {
-        // translatey -= 60 * index;
+    } else if (index < active_index) {
+      translatey -= 60 * index;
+    } else {
+      // index === active_index
+      if (index > 0) {
+        if (translateY.value > index * CARD_HEIGHT + FINAL_HEIGHT) {
+          if (diff) {
+            translatey -= 60 * (index - 1) +diff; //+ 60 * (index-1);
+          } else {
+            translatey -= 60 * index; //+ 60 * (index-1);
+          }
+        } else {
+          if (diff) {
+            // translatey -= diff; //+ 60 * (index-1);
+          } else {
+            translatey -= 60 * (index - 1); //+ 60 * (index-1);
+          }
+        }
       }
     }
 
-    if (index < 5) {
+    // let translatey = interpolate(
+    //   translateY.value,
+    //   [
+    //     -1,
+    //     0,
+    //     CARD_HEIGHT * index,
+    //     CARD_HEIGHT * (index + 1 / 2),
+    //     CARD_HEIGHT * (index + 1),
+    //   ],
+    //   [
+    //     translateY.value,
+    //     translateY.value,
+    //     translateY.value,
+    //     translateY.value,
+    //     translateY.value - 60 * index,
+    //   ],
+    //   Extrapolate.CLAMP
+    // );
+    // console.log(index,fixTwo(translatey));
+    // if (index > active_index) {
+    //   if (active_index > 0) {
+    //     translatey -= diff;
+    //   }
+    // } else if (index === active_index) {
+    //   if (index == 1) {
+    //   } else if (index == 2) {
+    //     // translatey -= 60;
+    //   } else {
+    //     // translatey -= 60 * index;
+    //   }
+    // }
+
+    if (index < 4) {
       console.log(
         `idx:${index},${active_index}=> Y: ${fixTwo(
           translateY.value
