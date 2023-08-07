@@ -1,0 +1,1 @@
+export { default as T} from './cards/animated-cards'

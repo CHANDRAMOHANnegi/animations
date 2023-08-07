@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
@@ -7,7 +7,7 @@ import {
   ScrollView,
   SafeAreaView,
   Dimensions,
-} from 'react-native';
+} from "react-native";
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -20,97 +20,100 @@ import Animated, {
   withDelay,
   useAnimatedScrollHandler,
   useDerivedValue,
-} from 'react-native-reanimated';
-import {Card} from './card-to-button';
+} from "react-native-reanimated";
+import { Card } from "./card-to-button";
 
-const {width: WIDTH, height: HEIGHT} = Dimensions.get('screen');
+const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
 // console.log(HEIGHT);
 const ITEM_SIZE = 120;
 const SPACING = 5;
 const VERTICAL_SPACING = 5;
 const data = [
   {
-    title: 'Applications',
-    text: '10% increase in application traffic traffic traffic',
+    title: "Applications",
+    text: "10% increase in application traffic traffic traffic",
   },
   {
-    title: 'traffic',
-    text: '100% decrease in application traffic traffic traffic',
+    title: "traffic",
+    text: "100% decrease in application traffic traffic traffic",
   },
   {
-    title: 'security',
-    text: 'Your current organization risk score is critical ',
+    title: "security",
+    text: "Your current organization risk score is critical ",
   },
   {
-    title: 'network',
-    text: 'Your current organization risk score is critical ',
+    title: "network",
+    text: "Your current organization risk score is critical ",
   },
   {
-    title: 'ssl',
-    text: 'Your current organization risk score is critical ',
+    title: "ssl",
+    text: "Your current organization risk score is critical ",
   },
   {
-    title: 'experience',
-    text: 'Your current organization risk score is critical ',
+    title: "experience",
+    text: "Your current organization risk score is critical ",
   },
   {
-    title: 'experience2',
-    text: 'Your current organization risk score is critical ',
+    title: "experience2",
+    text: "Your current organization risk score is critical ",
   },
   {
-    title: 'experience3',
-    text: 'Your current organization risk score is critical ',
+    title: "experience3",
+    text: "Your current organization risk score is critical ",
   },
   {
-    title: 'experience4',
-    text: 'Your current organization risk score is critical ',
+    title: "experience4",
+    text: "Your current organization risk score is critical ",
   },
   {
-    title: 'experience5',
-    text: 'Your current organization risk score is critical ',
+    title: "experience5",
+    text: "Your current organization risk score is critical ",
   },
   {
-    title: 'experience6',
-    text: 'Your current organization risk score is critical ',
+    title: "experience6",
+    text: "Your current organization risk score is critical ",
   },
   {
-    title: 'experience7',
-    text: 'Your current organization risk score is critical ',
+    title: "experience7",
+    text: "Your current organization risk score is critical ",
   },
   {
-    title: 'experience8',
-    text: 'Your current organization risk score is critical ',
+    title: "experience8",
+    text: "Your current organization risk score is critical ",
   },
 ];
 export const AnimatedCards = () => {
   const translateY = useSharedValue(0);
-  const scrollHandler = useAnimatedScrollHandler(event => {
+  const scrollHandler = useAnimatedScrollHandler((event) => {
     translateY.value = event.contentOffset.y;
   });
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <View
         style={{
-          backgroundColor: 'blue',
-          alignItems: 'center',
+          backgroundColor: "blue",
+          alignItems: "center",
           paddingVertical: VERTICAL_SPACING,
-          position: 'relative',
-        }}>
-        <Text style={{color: 'white'}}>Interactive Business Insights</Text>
+          position: "relative",
+        }}
+      >
+        <Text style={{ color: "white" }}>Interactive Business Insights</Text>
       </View>
       <View
         style={{
-          backgroundColor: 'green',
-        }}>
-        <Text style={{color: 'red'}}>Buttons :</Text>
+          backgroundColor: "green",
+        }}
+      >
+        <Text style={{ color: "red" }}>Buttons :</Text>
       </View>
       <View
         style={{
-          backgroundColor: 'yellow',
+          backgroundColor: "yellow",
           flex: 1,
-          position: 'relative',
-        }}>
+          position: "relative",
+        }}
+      >
         <Animated.ScrollView
           scrollEventThrottle={5}
           onScroll={scrollHandler}
@@ -139,6 +142,8 @@ export const AnimatedCards = () => {
 const styles = StyleSheet.create({
   text: {
     marginVertical: 30,
-    backgroundColor: 'red',
+    backgroundColor: "red",
   },
 });
+
+export default AnimatedCards;
