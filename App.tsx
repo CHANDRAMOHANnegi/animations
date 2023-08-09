@@ -3,6 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Screen1 from "./screens/posts";
 import Screen2 from "./screens/detail";
+import Home from "./home";
+
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +18,11 @@ const App = () => {
             presentation: "transparentModal",
           }}
         >
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ headerShown: true }}
+          />
           <Stack.Screen
             name="Posts"
             component={Screen1}

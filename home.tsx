@@ -33,6 +33,7 @@ import Intro from "./animations/00-introduction-to-reanimated";
 // import {SwipeToDelete} from './animations/06-swipe-to-delete';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AnimatedCards } from "./examples/cards/animated-cards";
+import { Reflectly } from "./can-it-be-done-in-react-native/index";
 // import Wallet from './examples/wallet/wallet';
 
 function App() {
@@ -49,10 +50,12 @@ function App() {
       {/* <InterPolate/> */}
       {/* <InterPolateColor /> */}
       {/* <PinchAnimation /> */}
-      <AnimatedCards />
+      {/* <AnimatedCards /> */}
       {/* <Wallet /> */}
       {/* <CircularProgressBar /> */}
       {/* <SwipeToDelete /> */}
+      {/* <ColorSelection /> */}
+      <Reflectly />
     </GestureHandlerRootView>
   );
 }
