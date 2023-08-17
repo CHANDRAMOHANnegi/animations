@@ -33,10 +33,10 @@ import Intro from "./animations/00-introduction-to-reanimated";
 // import {SwipeToDelete} from './animations/06-swipe-to-delete';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AnimatedCards } from "./examples/cards/animated-cards";
-import { Reflectly } from "./can-it-be-done-in-react-native/index";
+import { Reflectly, Chanel } from "./can-it-be-done-in-react-native/index";
 // import Wallet from './examples/wallet/wallet';
 
-function App() {
+function Home() {
   const isDarkMode = useColorScheme() === "dark";
 
   // const backgroundStyle = {
@@ -50,12 +50,13 @@ function App() {
       {/* <InterPolate/> */}
       {/* <InterPolateColor /> */}
       {/* <PinchAnimation /> */}
-      {/* <AnimatedCards /> */}
+      <AnimatedCards />
       {/* <Wallet /> */}
       {/* <CircularProgressBar /> */}
       {/* <SwipeToDelete /> */}
       {/* <ColorSelection /> */}
-      <Reflectly />
+      {/* <Reflectly /> */}
+      {/* <Chanel /> */}
     </GestureHandlerRootView>
   );
 }
@@ -79,4 +80,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default Home;
