@@ -70,11 +70,7 @@ export const Card = ({ title, text, translateY, index }) => {
     let diff = interpolate(
       absY,
       [0, (CARD_HEIGHT + VERTICAL_SPACING) / 2, CARD_HEIGHT + VERTICAL_SPACING],
-      [
-        0,
-        0,
-        (FINAL_HEIGHT + VERTICAL_SPACING),
-      ],
+      [0, 0, FINAL_HEIGHT + VERTICAL_SPACING],
       Extrapolate.CLAMP
     );
 
@@ -83,14 +79,19 @@ export const Card = ({ title, text, translateY, index }) => {
       if (active_index > 0) {
         if (diff) {
           translatey -=
-            FINAL_HEIGHT * (active_index - 1) +
-            diff -
-            active_index * VERTICAL_SPACING;
+            (FINAL_HEIGHT+VERTICAL_SPACING) * (active_index - 1) +
+            // VERTICAL_SPACING +
+            diff 
+            // -
+            // active_index * VERTICAL_SPACING;
         } else {
+          console.log(absY, (CARD_HEIGHT + VERTICAL_SPACING) / 2);
           if (absY < (CARD_HEIGHT + VERTICAL_SPACING) / 2) {
-            translatey -= FINAL_HEIGHT * (active_index - 1); //+ 60 * (index-1);
+            translatey -=
+              (FINAL_HEIGHT + VERTICAL_SPACING) * (active_index - 1); // - VERTICAL_SPACING; //+ 60 * (index-1);
           } else {
-            // translatey -= VERTICAL_SPACING; //+ 60 * (index-1);
+            translatey -=
+              (FINAL_HEIGHT + VERTICAL_SPACING) * (active_index - 1);
           }
         }
       }
@@ -99,33 +100,35 @@ export const Card = ({ title, text, translateY, index }) => {
     } else {
       // index === active_index
       if (index > 0) {
-        console.log(
-          translateY.value,
-          index * (CARD_HEIGHT + VERTICAL_SPACING) +
-            (CARD_HEIGHT + VERTICAL_SPACING) / 2
-        );
+        // console.log(
+        //   translateY.value,
+        //   index * (CARD_HEIGHT + VERTICAL_SPACING) +
+        //     (CARD_HEIGHT + VERTICAL_SPACING) / 2
+        // );
         if (
           translateY.value >
           index * (CARD_HEIGHT + VERTICAL_SPACING) +
             (CARD_HEIGHT + VERTICAL_SPACING) / 2
         ) {
           if (diff) {
-            translatey -= FINAL_HEIGHT * (index - 1) + diff ; //+ 60 * (index-1);
+            translatey -=
+              (FINAL_HEIGHT + VERTICAL_SPACING) * (index - 1) + diff; //+ 60 * (index-1);
           } else {
-            console.log("=--=-=");
+            // console.log("=--=-=");
             translatey -= FINAL_HEIGHT * index - VERTICAL_SPACING; //+ 60 * (index-1);
           }
         } else {
+          // console.log("active diff", diff);
           if (diff) {
             // translatey -= diff; //+ 60 * (index-1);
           } else {
-            translatey -= FINAL_HEIGHT * (index - 1); //+ 60 * (index-1);
+            translatey -= (FINAL_HEIGHT + VERTICAL_SPACING) * (index - 1); //+ 60 * (index-1);
           }
         }
       }
     }
 
-    if (index <2) {
+    if (index == 2) {
       console.log(
         `idx:${index},${active_index}=> Y: ${fixTwo(
           translateY.value
