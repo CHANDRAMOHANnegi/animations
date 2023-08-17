@@ -77,66 +77,30 @@ export const Card = ({ title, text, translateY, index }) => {
     let translatey = translateY.value;
     if (index > active_index) {
       if (active_index > 0) {
-        if (diff) {
-          translatey -=
-            (FINAL_HEIGHT+VERTICAL_SPACING) * (active_index - 1) +
-            // VERTICAL_SPACING +
-            diff 
-            // -
-            // active_index * VERTICAL_SPACING;
-        } else {
-          console.log(absY, (CARD_HEIGHT + VERTICAL_SPACING) / 2);
-          if (absY < (CARD_HEIGHT + VERTICAL_SPACING) / 2) {
-            translatey -=
-              (FINAL_HEIGHT + VERTICAL_SPACING) * (active_index - 1); // - VERTICAL_SPACING; //+ 60 * (index-1);
-          } else {
-            translatey -=
-              (FINAL_HEIGHT + VERTICAL_SPACING) * (active_index - 1);
-          }
-        }
+        translatey -=
+          (FINAL_HEIGHT + VERTICAL_SPACING) * (active_index - 1) + diff;
       }
     } else if (index < active_index) {
       translatey -= (FINAL_HEIGHT + VERTICAL_SPACING) * index;
     } else {
-      // index === active_index
+      /***
+       * index === active_index
+       * active card
+       * */
       if (index > 0) {
-        // console.log(
-        //   translateY.value,
-        //   index * (CARD_HEIGHT + VERTICAL_SPACING) +
-        //     (CARD_HEIGHT + VERTICAL_SPACING) / 2
-        // );
-        if (
-          translateY.value >
-          index * (CARD_HEIGHT + VERTICAL_SPACING) +
-            (CARD_HEIGHT + VERTICAL_SPACING) / 2
-        ) {
-          if (diff) {
-            translatey -=
-              (FINAL_HEIGHT + VERTICAL_SPACING) * (index - 1) + diff; //+ 60 * (index-1);
-          } else {
-            // console.log("=--=-=");
-            translatey -= FINAL_HEIGHT * index - VERTICAL_SPACING; //+ 60 * (index-1);
-          }
-        } else {
-          // console.log("active diff", diff);
-          if (diff) {
-            // translatey -= diff; //+ 60 * (index-1);
-          } else {
-            translatey -= (FINAL_HEIGHT + VERTICAL_SPACING) * (index - 1); //+ 60 * (index-1);
-          }
-        }
+        translatey -= (FINAL_HEIGHT + VERTICAL_SPACING) * (index - 1) + diff; //+ 60 * (index-1);
       }
     }
 
-    if (index == 2) {
-      console.log(
-        `idx:${index},${active_index}=> Y: ${fixTwo(
-          translateY.value
-        )}, y: ${fixTwo(translatey)}, absY: ${absY}, height: ${fixTwo(
-          heightScale
-        )}, diff: ${fixTwo(diff)}  `
-      );
-    }
+    // if (index == 2) {
+    //   console.log(
+    //     `idx:${index},${active_index}=> Y: ${fixTwo(
+    //       translateY.value
+    //     )}, y: ${fixTwo(translatey)}, absY: ${absY}, height: ${fixTwo(
+    //       heightScale
+    //     )}, diff: ${fixTwo(diff)}  `
+    //   );
+    // }
 
     return {
       transform: [{ translateY: translatey }, { translateX: translatex }],
@@ -149,7 +113,12 @@ export const Card = ({ title, text, translateY, index }) => {
   const iStyle = useAnimatedStyle(() => {
     const opacity = interpolate(
       translateY.value,
-      [-1, 0, CARD_HEIGHT * (index + 1), CARD_HEIGHT * (index + 2)],
+      [
+        -1,
+        0,
+        (CARD_HEIGHT + VERTICAL_SPACING) * (index + 1),
+        (CARD_HEIGHT + VERTICAL_SPACING) * (index + 2),
+      ],
       [1, 1, 0, 0],
       Extrapolate.CLAMP
     );
