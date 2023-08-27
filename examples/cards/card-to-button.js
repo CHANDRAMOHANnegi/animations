@@ -10,13 +10,13 @@ import Animated, {
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
 // console.log(HEIGHT);
-const CARD_HEIGHT = 120;
+const CARD_HEIGHT = 180;
 const CARD_WIDTH = 300;
 const SPACING = 5;
 const BUTTON_WIDTH = 60;
 const BUTTON_SPACING = 20;
 const VERTICAL_SPACING = 10;
-const FINAL_HEIGHT = CARD_HEIGHT / 2;
+const FINAL_HEIGHT = 60;
 
 const fixTwo = (num) => {
   "worklet";
@@ -55,7 +55,7 @@ export const Card = ({ title, text, translateY, index }) => {
       Extrapolate.CLAMP
     );
 
-    const heightScale = interpolate(
+    const cardHeight = interpolate(
       translateY.value,
       [
         -1,
@@ -63,7 +63,7 @@ export const Card = ({ title, text, translateY, index }) => {
         (CARD_HEIGHT + VERTICAL_SPACING) * index,
         (CARD_HEIGHT + VERTICAL_SPACING) * (index + 1),
       ],
-      [1, 1, 1, 0.5],
+      [CARD_HEIGHT, CARD_HEIGHT, CARD_HEIGHT, FINAL_HEIGHT],
       Extrapolate.CLAMP
     );
 
@@ -92,19 +92,19 @@ export const Card = ({ title, text, translateY, index }) => {
       }
     }
 
-    // if (index == 2) {
-    //   console.log(
-    //     `idx:${index},${active_index}=> Y: ${fixTwo(
-    //       translateY.value
-    //     )}, y: ${fixTwo(translatey)}, absY: ${absY}, height: ${fixTwo(
-    //       heightScale
-    //     )}, diff: ${fixTwo(diff)}  `
-    //   );
-    // }
+    if (index == 2) {
+      console.log(
+        `idx:${index},${active_index}=> Y: ${fixTwo(
+          translateY.value
+        )}, y: ${fixTwo(translatey)}, absY: ${absY}, cardHeight: ${fixTwo(
+          cardHeight
+        )}, diff: ${fixTwo(diff)}  `
+      );
+    }
 
     return {
       transform: [{ translateY: translatey }, { translateX: translatex }],
-      height: heightScale * CARD_HEIGHT,
+      height: cardHeight,
       width: widthScale * CARD_WIDTH,
       backgroundColor: index === active_index ? "pink" : "yellow",
     };
