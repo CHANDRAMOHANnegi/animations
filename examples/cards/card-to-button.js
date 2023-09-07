@@ -18,6 +18,8 @@ const BUTTON_SPACING = 20;
 const VERTICAL_SPACING = 10;
 const FINAL_HEIGHT = 60;
 
+const HORIZONTAL_SCROLL_START_BREAKPOINT = CARD_WIDTH * 0.2;
+
 const fixTwo = (num) => {
   "worklet";
   return num.toFixed(2);
@@ -43,18 +45,6 @@ export const Card = ({ title, text, translateY, index }) => {
       Extrapolate.CLAMP
     );
 
-    const translatex = interpolate(
-      translateY.value,
-      [
-        -1,
-        0,
-        (CARD_HEIGHT + VERTICAL_SPACING) * index,
-        CARD_HEIGHT * (index + 1),
-      ],
-      [0, 0, 0, index * (BUTTON_WIDTH + BUTTON_SPACING)],
-      Extrapolate.CLAMP
-    );
-
     const cardHeight = interpolate(
       translateY.value,
       [
@@ -73,6 +63,8 @@ export const Card = ({ title, text, translateY, index }) => {
       [0, 0, FINAL_HEIGHT + VERTICAL_SPACING],
       Extrapolate.CLAMP
     );
+
+    // vertical scrolling
 
     let translatey = translateY.value;
     if (translateY.value > 0) {
@@ -94,6 +86,55 @@ export const Card = ({ title, text, translateY, index }) => {
       }
     } else {
       translatey = 0;
+    }
+
+    // vertical scrolling end
+
+    // horizontal scrolling
+
+    // let translatex=0;
+    let translatex = 0;
+
+    const xDiff = interpolate(
+      translateY.value,
+      [
+        -1,
+        0,
+        (CARD_HEIGHT + VERTICAL_SPACING) * index,
+        CARD_HEIGHT * (index + 1),
+      ],
+      [0, 0, 0, index * (BUTTON_WIDTH + BUTTON_SPACING)],
+      Extrapolate.CLAMP
+    );
+
+    if (index < active_index) {
+      translatex = withTiming(
+        index * (BUTTON_WIDTH + BUTTON_SPACING) - 30 * active_index,
+        { duration: 300 }
+      );
+      // withTiming(HORIZONTAL_SCROLL_START_BREAKPOINT * 1, {
+      //   duration: 3000,
+      // });
+    } else if (index === active_index) {
+      translatex = interpolate(
+        translateY.value,
+        [
+          -1,
+          0,
+          (CARD_HEIGHT + VERTICAL_SPACING) * index,
+          (CARD_HEIGHT + VERTICAL_SPACING) * (index + 1),
+          (CARD_HEIGHT + VERTICAL_SPACING) * (index + 1) + 1,
+        ],
+        [
+          0,
+          0,
+          (active_index - index) * (BUTTON_WIDTH + BUTTON_SPACING),
+          active_index * (BUTTON_WIDTH + BUTTON_SPACING),
+          3 * (BUTTON_WIDTH + BUTTON_SPACING),
+        ],
+        Extrapolate.CLAMP
+      );
+    } else {
     }
 
     if (index == 0) {

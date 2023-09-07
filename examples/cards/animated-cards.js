@@ -112,6 +112,7 @@ export const AnimatedCards = () => {
           backgroundColor: "yellow",
           flex: 1,
           position: "relative",
+          alignItems: "center",
         }}
       >
         <Animated.ScrollView
