@@ -6,6 +6,8 @@ import Screen2 from "./screens/detail";
 import Home from "./home";
 
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import DrawerScreen from "./examples/drawer/drawer-screen";
+// import { Home } from "./examples/drawer/drawer";
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -15,7 +17,7 @@ const App = () => {
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
-            presentation: "transparentModal",
+            // presentation: "transparentModal",
           }}
         >
           <Stack.Screen
@@ -29,6 +31,7 @@ const App = () => {
             options={{ headerShown: true }}
           />
           <Stack.Screen name="Detail" component={Screen2} />
+          <Stack.Screen name="Drawer1" component={DrawerScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
