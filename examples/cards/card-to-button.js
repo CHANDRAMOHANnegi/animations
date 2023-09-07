@@ -75,24 +75,28 @@ export const Card = ({ title, text, translateY, index }) => {
     );
 
     let translatey = translateY.value;
-    if (index > active_index) {
-      if (active_index > 0) {
-        translatey -=
-          (FINAL_HEIGHT + VERTICAL_SPACING) * (active_index - 1) + diff;
+    if (translateY.value > 0) {
+      if (index > active_index) {
+        if (active_index > 0) {
+          translatey -=
+            (FINAL_HEIGHT + VERTICAL_SPACING) * (active_index - 1) + diff;
+        }
+      } else if (index < active_index) {
+        translatey -= (FINAL_HEIGHT + VERTICAL_SPACING) * index;
+      } else {
+        /***
+         * index === active_index
+         * active card
+         * */
+        if (index > 0) {
+          translatey -= (FINAL_HEIGHT + VERTICAL_SPACING) * (index - 1) + diff; //+ 60 * (index-1);
+        }
       }
-    } else if (index < active_index) {
-      translatey -= (FINAL_HEIGHT + VERTICAL_SPACING) * index;
     } else {
-      /***
-       * index === active_index
-       * active card
-       * */
-      if (index > 0) {
-        translatey -= (FINAL_HEIGHT + VERTICAL_SPACING) * (index - 1) + diff; //+ 60 * (index-1);
-      }
+      translatey = 0;
     }
 
-    if (index == 2) {
+    if (index == 0) {
       console.log(
         `idx:${index},${active_index}=> Y: ${fixTwo(
           translateY.value
