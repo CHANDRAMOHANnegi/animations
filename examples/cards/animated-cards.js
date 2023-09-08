@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -28,63 +28,11 @@ const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
 const ITEM_SIZE = 120;
 const SPACING = 5;
 const VERTICAL_SPACING = 5;
-const data = [
-  {
-    title: "Applications",
-    text: "10% increase in application traffic traffic traffic",
-  },
-  {
-    title: "traffic",
-    text: "100% decrease in application traffic traffic traffic",
-  },
-  {
-    title: "security",
-    text: "Your current organization risk score is critical ",
-  },
-  {
-    title: "network",
-    text: "Your current organization risk score is critical ",
-  },
-  {
-    title: "ssl",
-    text: "Your current organization risk score is critical ",
-  },
-  {
-    title: "experience",
-    text: "Your current organization risk score is critical ",
-  },
-  {
-    title: "experience2",
-    text: "Your current organization risk score is critical ",
-  },
-  {
-    title: "experience3",
-    text: "Your current organization risk score is critical ",
-  },
-  {
-    title: "experience4",
-    text: "Your current organization risk score is critical ",
-  },
-  {
-    title: "experience5",
-    text: "Your current organization risk score is critical ",
-  },
-  {
-    title: "experience6",
-    text: "Your current organization risk score is critical ",
-  },
-  {
-    title: "experience7",
-    text: "Your current organization risk score is critical ",
-  },
-  {
-    title: "experience8",
-    text: "Your current organization risk score is critical ",
-  },
-];
+
+import { data1, data2 } from "./data";
 
 export const AnimatedCards = () => {
-  const [cardsData, setCardsData] = React.useState(data);
+  const [cardsData, setCardsData] = React.useState(data1);
   const scrollViewRef = React.useRef(null);
 
   const translateY = useSharedValue(0);
@@ -93,7 +41,7 @@ export const AnimatedCards = () => {
   });
 
   const handleUpdateCardsData = () => {
-    const randomInt = 2;
+    const randomInt = parseInt(Math.random() * 10);
 
     const newItem = {
       title: "randomInt" + randomInt,
@@ -101,7 +49,7 @@ export const AnimatedCards = () => {
     };
 
     const newData = [...cardsData];
-    newData.splice(randomInt, 0, newItem);
+    newData.splice(2, 0, newItem);
     // console.log(cardsData, newData);
     setCardsData(newData);
   };
@@ -113,6 +61,22 @@ export const AnimatedCards = () => {
       y,
     });
   };
+  const [time, setTime] = useState(0);
+
+  useEffect(() => {
+    setInterval(() => {
+      setTime((t) => t + 1);
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
+    if (time === 5) {
+      setCardsData(data2);
+    }
+    // if (time % 5 === 0) {
+    //   handleUpdateCardsData();
+    // }
+  }, [time]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -124,7 +88,9 @@ export const AnimatedCards = () => {
           position: "relative",
         }}
       >
-        <Text style={{ color: "white" }}>Interactive Business Insights</Text>
+        <Text style={{ color: "white" }}>
+          Interactive Business Insights {time}
+        </Text>
       </View>
       <TouchableOpacity
         onPress={() => {
