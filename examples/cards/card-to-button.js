@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import Animated, {
   useAnimatedStyle,
   withRepeat,
@@ -31,7 +37,13 @@ const fixTwo = (num) => {
   return num.toFixed(2);
 };
 
-export const Card = ({ title, text, translateY, index }) => {
+export const Card = ({
+  title,
+  text,
+  translateY,
+  index,
+  scrollToItemByIndex,
+}) => {
   const rStyle = useAnimatedStyle(() => {
     const active_index = parseInt(translateY.value / TOTAL_CARD_HEIGHT);
 
@@ -96,9 +108,7 @@ export const Card = ({ title, text, translateY, index }) => {
     );
 
     if (index < active_index) {
-      translatex = withTiming(index * TOTAL_BUTTON_WIDTH - 30 * active_index, {
-        duration: 100,
-      });
+      translatex = index * TOTAL_BUTTON_WIDTH - 30 * active_index;
       // withTiming(HORIZONTAL_SCROLL_START_BREAKPOINT * 1, {
       //   duration: 3000,
       // });
@@ -172,9 +182,17 @@ export const Card = ({ title, text, translateY, index }) => {
       ]}
     >
       <View>
-        <View style={styles.text}>
+        <TouchableOpacity
+          style={styles.text}
+          onPress={() => {
+            scrollToItemByIndex({
+              y: (CARD_HEIGHT + VERTICAL_SPACING) * index,
+              x: 0,
+            });
+          }}
+        >
           <Text>{title}</Text>
-        </View>
+        </TouchableOpacity>
         <Animated.View style={iStyle}>
           <View>
             <Text>{text}</Text>

@@ -82,11 +82,37 @@ const data = [
     text: "Your current organization risk score is critical ",
   },
 ];
+
 export const AnimatedCards = () => {
+  const [cardsData, setCardsData] = React.useState(data);
+  const scrollViewRef = React.useRef(null);
+
   const translateY = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler((event) => {
     translateY.value = event.contentOffset.y;
   });
+
+  const handleUpdateCardsData = () => {
+    const randomInt = 2;
+
+    const newItem = {
+      title: "randomInt" + randomInt,
+      text: "10% increase in application traffic traffic traffic",
+    };
+
+    const newData = [...cardsData];
+    newData.splice(randomInt, 0, newItem);
+    // console.log(cardsData, newData);
+    setCardsData(newData);
+  };
+
+  const scrollToItemByIndex = ({ x, y }) => {
+    console.log({ x, y });
+    scrollViewRef.current.scrollTo({
+      x,
+      y,
+    });
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -100,13 +126,16 @@ export const AnimatedCards = () => {
       >
         <Text style={{ color: "white" }}>Interactive Business Insights</Text>
       </View>
-      <View
+      <TouchableOpacity
+        onPress={() => {
+          handleUpdateCardsData();
+        }}
         style={{
           backgroundColor: "green",
         }}
       >
         <Text style={{ color: "red" }}>Buttons :</Text>
-      </View>
+      </TouchableOpacity>
       <View
         style={{
           backgroundColor: "yellow",
@@ -116,7 +145,8 @@ export const AnimatedCards = () => {
         }}
       >
         <Animated.ScrollView
-          scrollEventThrottle={5}
+          ref={scrollViewRef}
+          scrollEventThrottle={16}
           onScroll={scrollHandler}
           // StickyHeaderComponent={p => {
           //   return (
@@ -131,8 +161,14 @@ export const AnimatedCards = () => {
           // style={{backgroundColor: 'pink'}}
           // contentInset={{top: 50}}
         >
-          {data.map((d, index) => (
-            <Card {...d} translateY={translateY} index={index} key={index} />
+          {cardsData.map((d, index) => (
+            <Card
+              {...d}
+              translateY={translateY}
+              scrollToItemByIndex={scrollToItemByIndex}
+              index={index}
+              key={index}
+            />
           ))}
         </Animated.ScrollView>
       </View>
