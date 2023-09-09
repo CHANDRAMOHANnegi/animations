@@ -17,7 +17,7 @@ import Animated, {
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
 // console.log(HEIGHT);
 const CARD_HEIGHT = 180;
-const CARD_WIDTH = 300;
+const CARD_WIDTH = 350;
 const SPACING = 5;
 
 const BUTTON_WIDTH = 60;
@@ -98,7 +98,12 @@ export const Card = ({
     // horizontal scrolling
 
     // let translatex=0;
-    let translatex = 0;
+    let translatex = interpolate(
+      translateY.value,
+      [-1, 0, TOTAL_CARD_HEIGHT * index, CARD_HEIGHT * (index + 1)],
+      [0, 0, 0, index * TOTAL_BUTTON_WIDTH],
+      Extrapolate.CLAMP
+    );
 
     const xDiff = interpolate(
       translateY.value,
@@ -107,32 +112,32 @@ export const Card = ({
       Extrapolate.CLAMP
     );
 
-    if (index < active_index) {
-      translatex = index * TOTAL_BUTTON_WIDTH - 30 * active_index;
-      // withTiming(HORIZONTAL_SCROLL_START_BREAKPOINT * 1, {
-      //   duration: 3000,
-      // });
-    } else if (index === active_index) {
-      translatex = interpolate(
-        translateY.value,
-        [
-          -1,
-          0,
-          TOTAL_CARD_HEIGHT * index,
-          TOTAL_CARD_HEIGHT * (index + 1),
-          TOTAL_CARD_HEIGHT * (index + 1) + 1,
-        ],
-        [
-          0,
-          0,
-          (active_index - index) * TOTAL_BUTTON_WIDTH,
-          active_index * TOTAL_BUTTON_WIDTH,
-          3 * TOTAL_BUTTON_WIDTH,
-        ],
-        Extrapolate.CLAMP
-      );
-    } else {
-    }
+    // if (index < active_index) {
+    //   translatex = index * TOTAL_BUTTON_WIDTH - 30 * active_index;
+    //   // withTiming(HORIZONTAL_SCROLL_START_BREAKPOINT * 1, {
+    //   //   duration: 3000,
+    //   // });
+    // } else if (index === active_index) {
+    //   translatex = interpolate(
+    //     translateY.value,
+    //     [
+    //       -1,
+    //       0,
+    //       TOTAL_CARD_HEIGHT * index,
+    //       TOTAL_CARD_HEIGHT * (index + 1),
+    //       TOTAL_CARD_HEIGHT * (index + 1) + 1,
+    //     ],
+    //     [
+    //       0,
+    //       0,
+    //       (active_index - index) * TOTAL_BUTTON_WIDTH,
+    //       active_index * TOTAL_BUTTON_WIDTH,
+    //       3 * TOTAL_BUTTON_WIDTH,
+    //     ],
+    //     Extrapolate.CLAMP
+    //   );
+    // } else {
+    // }
 
     if (index == 0) {
       console.log(
@@ -149,6 +154,7 @@ export const Card = ({
       height: cardHeight,
       width: widthScale * CARD_WIDTH,
       backgroundColor: index === active_index ? "pink" : "yellow",
+      opacity: index < active_index ? 0 : 1,
     };
   });
 
@@ -175,7 +181,7 @@ export const Card = ({
           borderRadius: 20,
           borderWidth: 1,
           borderColor: "red",
-          marginHorizontal: 10 * SPACING,
+          // marginHorizontal: 10 * SPACING,
           marginTop: VERTICAL_SPACING,
         },
         rStyle,

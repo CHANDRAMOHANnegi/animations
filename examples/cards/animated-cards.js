@@ -30,8 +30,9 @@ const SPACING = 5;
 const VERTICAL_SPACING = 5;
 
 import { data1, data2 } from "./data";
+import { Button } from "./buttons";
 
-export const AnimatedCards = () => {
+export const CardToButtonAnimation = () => {
   const [cardsData, setCardsData] = React.useState(data1);
   const scrollViewRef = React.useRef(null);
 
@@ -64,14 +65,14 @@ export const AnimatedCards = () => {
   const [time, setTime] = useState(0);
 
   useEffect(() => {
-    setInterval(() => {
-      setTime((t) => t + 1);
-    }, 1000);
+    // setInterval(() => {
+    //   setTime((t) => t + 1);
+    // }, 1000);
   }, []);
 
   useEffect(() => {
     if (time === 5) {
-      setCardsData(data2);
+      // setCardsData(data2);
     }
     // if (time % 5 === 0) {
     //   handleUpdateCardsData();
@@ -92,16 +93,7 @@ export const AnimatedCards = () => {
           Interactive Business Insights {time}
         </Text>
       </View>
-      <TouchableOpacity
-        onPress={() => {
-          handleUpdateCardsData();
-        }}
-        style={{
-          backgroundColor: "green",
-        }}
-      >
-        <Text style={{ color: "red" }}>Buttons :</Text>
-      </TouchableOpacity>
+
       <View
         style={{
           backgroundColor: "yellow",
@@ -110,22 +102,44 @@ export const AnimatedCards = () => {
           alignItems: "center",
         }}
       >
+        <View
+          onPress={() => {
+            handleUpdateCardsData();
+          }}
+          style={{
+            // backgroundColor: "transparent",
+            position: "absolute",
+            zIndex: 1,
+            // top: 20
+          }}
+        >
+          <Animated.ScrollView
+            ref={scrollViewRef}
+            scrollEventThrottle={16}
+            // onScroll={scrollHandler}
+            contentContainerStyle={{ paddingHorizontal: 20 }}
+            horizontal={true}
+            // contentInset={{left:20}}
+            showsHorizontalScrollIndicator={false}
+          >
+            {cardsData.map((d, index) => {
+              console.log("=-=-=-=-", d);
+              return (
+                <Button
+                  {...d}
+                  translateY={translateY}
+                  index={index}
+                  key={index}
+                />
+              );
+            })}
+          </Animated.ScrollView>
+        </View>
         <Animated.ScrollView
           ref={scrollViewRef}
           scrollEventThrottle={16}
           onScroll={scrollHandler}
-          // StickyHeaderComponent={p => {
-          //   return (
-          //     <View {...p} style={{backgroundColor: 'red'}}>
-          //       <Text>Hello</Text>
-          //       <Text>Hello</Text>
-          //       <Text>Hello</Text>
-          //       <Text>Hello</Text>
-          //     </View>
-          //   );
-          // }}
-          // style={{backgroundColor: 'pink'}}
-          // contentInset={{top: 50}}
+          showsVerticalScrollIndicator={false}
         >
           {cardsData.map((d, index) => (
             <Card
@@ -149,4 +163,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AnimatedCards;
+export default CardToButtonAnimation;

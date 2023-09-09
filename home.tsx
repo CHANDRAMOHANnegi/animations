@@ -32,7 +32,7 @@ import Intro from "./animations/00-introduction-to-reanimated";
 // import {CircularProgressBar} from './animations/05-circular-progress-bar';
 // import {SwipeToDelete} from './animations/06-swipe-to-delete';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { AnimatedCards } from "./examples/cards/animated-cards";
+import { CardToButtonAnimation } from "./examples/cards/animated-cards";
 import { Reflectly, Chanel } from "./can-it-be-done-in-react-native/index";
 // import Wallet from './examples/wallet/wallet';
 
@@ -50,7 +50,7 @@ function Home() {
       {/* <InterPolate/> */}
       {/* <InterPolateColor /> */}
       {/* <PinchAnimation /> */}
-      <AnimatedCards />
+      < CardToButtonAnimation/>
       {/* <Wallet /> */}
       {/* <CircularProgressBar /> */}
       {/* <SwipeToDelete /> */}
