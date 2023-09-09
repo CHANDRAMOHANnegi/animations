@@ -30,7 +30,7 @@ const TOTAL_FINAL_CARD_HEIGHT = FINAL_HEIGHT + VERTICAL_SPACING;
 const HORIZONTAL_SCROLL_START_BREAKPOINT = CARD_WIDTH * 0.2;
 
 export const Button = (props) => {
-  const { title, text, translateY, index } = props;
+  const { title, text, translateY, index, scrollToItemByIndex } = props;
   //   console.log('===-=',props);
   const iStyle = useAnimatedStyle(() => {
     const show = translateY.value >= TOTAL_CARD_HEIGHT * (index + 1);
@@ -50,13 +50,21 @@ export const Button = (props) => {
             borderRadius: 20,
             borderWidth: 1,
             borderColor: "red",
-            marginHorizontal: 10,
+            marginRight: BUTTON_SPACING,
             marginTop: 10,
           },
           iStyle,
         ]}
       >
-        <TouchableOpacity style={styles.text}>
+        <TouchableOpacity
+          style={styles.text}
+          onPress={() => {
+            scrollToItemByIndex({
+              y: (CARD_HEIGHT + VERTICAL_SPACING) * index,
+              x: 0,
+            });
+          }}
+        >
           <Text>{title}</Text>
         </TouchableOpacity>
       </Animated.View>

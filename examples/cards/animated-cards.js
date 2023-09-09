@@ -128,6 +128,7 @@ export const CardToButtonAnimation = () => {
                 <Button
                   {...d}
                   translateY={translateY}
+                  scrollToItemByIndex={scrollToItemByIndex}
                   index={index}
                   key={index}
                 />
