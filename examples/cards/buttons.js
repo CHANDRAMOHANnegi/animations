@@ -13,6 +13,7 @@ import Animated, {
   Extrapolate,
   withTiming,
 } from "react-native-reanimated";
+import { SIZES } from "./constants";
 const CARD_HEIGHT = 180;
 const CARD_WIDTH = 300;
 const SPACING = 5;
@@ -52,6 +53,7 @@ export const Button = (props) => {
             borderColor: "red",
             marginRight: BUTTON_SPACING,
             marginTop: 10,
+            justifyContent: "center",
           },
           iStyle,
         ]}
@@ -65,7 +67,7 @@ export const Button = (props) => {
             });
           }}
         >
-          <Text>{title}</Text>
+          <Text style={{ fontSize: SIZES.FINAL_TITLE_FONT_SIZE }}>{title}</Text>
         </TouchableOpacity>
       </Animated.View>
     </>

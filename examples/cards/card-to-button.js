@@ -13,6 +13,7 @@ import Animated, {
   Extrapolate,
   withTiming,
 } from "react-native-reanimated";
+import { SIZES } from "./constants";
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
 // console.log(HEIGHT);
@@ -167,7 +168,51 @@ export const Card = ({
     );
 
     return {
-      opacity,
+      // opacity,
+    };
+  });
+
+  const tStyle = useAnimatedStyle(() => {
+    const cardHeight = interpolate(
+      translateY.value,
+      [-1, 0, TOTAL_CARD_HEIGHT * index, TOTAL_CARD_HEIGHT * (index + 1)],
+      [CARD_HEIGHT, CARD_HEIGHT, CARD_HEIGHT, FINAL_HEIGHT],
+      Extrapolate.CLAMP
+    );
+    const fontSize = interpolate(
+      cardHeight,
+      [CARD_HEIGHT, FINAL_HEIGHT],
+      [SIZES.INITIAL_TITLE_FONT_SIZE, SIZES.FINAL_TITLE_FONT_SIZE],
+      Extrapolate.CLAMP
+    );
+    const marginVertical = interpolate(
+      cardHeight,
+      [CARD_HEIGHT, FINAL_HEIGHT],
+      [30, 5],
+      Extrapolate.CLAMP
+    );
+    return {
+      fontSize,
+      marginVertical,
+    };
+  });
+
+  const lStyle = useAnimatedStyle(() => {
+    const cardHeight = interpolate(
+      translateY.value,
+      [-1, 0, TOTAL_CARD_HEIGHT * index, TOTAL_CARD_HEIGHT * (index + 1)],
+      [CARD_HEIGHT, CARD_HEIGHT, CARD_HEIGHT, FINAL_HEIGHT],
+      Extrapolate.CLAMP
+    );
+    const fontScale = interpolate(
+      cardHeight,
+      [CARD_HEIGHT, FINAL_HEIGHT],
+      [1, 0],
+      Extrapolate.CLAMP
+    );
+    // console.log(fontScale, cardHeight);
+    return {
+      fontSize: fontScale * 14,
     };
   });
 
@@ -183,13 +228,14 @@ export const Card = ({
           borderColor: "red",
           // marginHorizontal: 10 * SPACING,
           marginTop: VERTICAL_SPACING,
+          justifyContent: "center",
         },
         rStyle,
       ]}
     >
-      <View>
+      <View style={{}}>
         <TouchableOpacity
-          style={styles.text}
+          style={{}}
           onPress={() => {
             scrollToItemByIndex({
               y: (CARD_HEIGHT + VERTICAL_SPACING) * index,
@@ -197,12 +243,10 @@ export const Card = ({
             });
           }}
         >
-          <Text>{title}</Text>
+          <Animated.Text style={[styles.text, tStyle]}>{title}</Animated.Text>
         </TouchableOpacity>
         <Animated.View style={iStyle}>
-          <View>
-            <Text>{text}</Text>
-          </View>
+          <Animated.Text style={lStyle}>{text}</Animated.Text>
         </Animated.View>
       </View>
     </Animated.View>
